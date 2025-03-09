@@ -17,7 +17,7 @@ namespace MUnique.OpenMU.Persistence.EntityFramework.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -34,6 +34,9 @@ namespace MUnique.OpenMU.Persistence.EntityFramework.Migrations
                     b.Property<string>("EMail")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsTemplate")
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsVaultExtended")
                         .HasColumnType("boolean");
@@ -324,8 +327,7 @@ namespace MUnique.OpenMU.Persistence.EntityFramework.Migrations
                     b.Property<Guid?>("AccountId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("CharacterClassId")
-                        .IsRequired()
+                    b.Property<Guid>("CharacterClassId")
                         .HasColumnType("uuid");
 
                     b.Property<byte>("CharacterSlot")
@@ -348,6 +350,9 @@ namespace MUnique.OpenMU.Persistence.EntityFramework.Migrations
 
                     b.Property<Guid?>("InventoryId")
                         .HasColumnType("uuid");
+
+                    b.Property<bool>("IsStoreOpened")
+                        .HasColumnType("boolean");
 
                     b.Property<byte[]>("KeyConfiguration")
                         .HasColumnType("bytea");
@@ -386,6 +391,9 @@ namespace MUnique.OpenMU.Persistence.EntityFramework.Migrations
 
                     b.Property<int>("StateRemainingSeconds")
                         .HasColumnType("integer");
+
+                    b.Property<string>("StoreName")
+                        .HasColumnType("text");
 
                     b.Property<int>("UsedFruitPoints")
                         .HasColumnType("integer");
@@ -2142,9 +2150,6 @@ namespace MUnique.OpenMU.Persistence.EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CharacterId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("LetterDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -3030,6 +3035,9 @@ namespace MUnique.OpenMU.Persistence.EntityFramework.Migrations
                     b.Property<bool>("MultipleAllowed")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("NpcPriceDivisor")
+                        .HasColumnType("integer");
+
                     b.Property<byte>("ResultItemExcellentOptionChance")
                         .HasColumnType("smallint");
 
@@ -3052,6 +3060,9 @@ namespace MUnique.OpenMU.Persistence.EntityFramework.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("SuccessPercentageAdditionForExcellentItem")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SuccessPercentageAdditionForGuardianItem")
                         .HasColumnType("integer");
 
                     b.Property<int>("SuccessPercentageAdditionForLuck")

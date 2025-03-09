@@ -103,6 +103,19 @@ public static class ItemExtensions
     }
 
     /// <summary>
+    /// Determines whether this instance is a "380 item", that is, if it can be upgraded with Jewel of Guardian.
+    /// </summary>
+    /// <param name="item">The item.</param>
+    /// <returns>
+    ///   <c>true</c> if the specified item is a "380 item"; otherwise, <c>false</c>.
+    /// </returns>
+    public static bool IsGuardian(this Item item)
+    {
+        return item.Definition!.PossibleItemOptions.Any(pio => pio.PossibleOptions
+            .Any(po => po.OptionType == ItemOptionTypes.GuardianOption));
+    }
+
+    /// <summary>
     /// Determines whether this item is a defensive item.
     /// </summary>
     /// <param name="item">The item.</param>
@@ -334,14 +347,15 @@ public static class ItemExtensions
     /// </summary>
     /// <param name="itemAppearance">The item appearance.</param>
     /// <param name="persistenceContext">The persistence context where the object should be added.</param>
+    /// <param name="gameConfiguration">The game configuration.</param>
     /// <returns>A persistent instance of the given <see cref="ItemAppearance"/>.</returns>
-    public static ItemAppearance MakePersistent(this ItemAppearance itemAppearance, IContext persistenceContext)
+    public static ItemAppearance MakePersistent(this ItemAppearance itemAppearance, IContext persistenceContext, GameConfiguration gameConfiguration)
     {
         var persistent = persistenceContext.CreateNew<ItemAppearance>();
         persistent.ItemSlot = itemAppearance.ItemSlot;
         persistent.Definition = itemAppearance.Definition;
         persistent.Level = itemAppearance.Level;
-        itemAppearance.VisibleOptions.Distinct().ForEach(o => persistent.VisibleOptions.Add(o));
+        itemAppearance.VisibleOptions.Distinct().ForEach(o => persistent.VisibleOptions.Add(gameConfiguration.ItemOptionTypes.First(iot => iot.Equals(o))));
         return persistent;
     }
 
